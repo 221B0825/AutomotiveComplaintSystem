@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class ComplaintList {
 	private List<Complaint> complaintList;
 
 	public ComplaintList() {
+		this.complaintList = new ArrayList<Complaint>();
 		File file = new File("data/user/user.txt");
 		try {
 			Scanner sc = new Scanner(file);

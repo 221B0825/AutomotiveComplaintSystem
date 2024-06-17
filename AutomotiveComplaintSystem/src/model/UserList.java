@@ -26,13 +26,12 @@ public class UserList {
 				String address = split[4];
 				String socialNumber = split[5];
 				String phoneNumber = split[6];
-				List<String> carIDList = Arrays.asList(split[7].split(" "));
 
 				User user;
 				if(email.equals("admin"))
 					user = new Admin(id, email, password, name, address, socialNumber, phoneNumber, "국토교통부");
 				else
-					user = new Customer(id, email, password, name, address, socialNumber, phoneNumber, carIDList);
+					user = new Customer(id, email, password, name, address, socialNumber, phoneNumber);
 				userList.add(user);
 			}
 		} catch (FileNotFoundException e) {

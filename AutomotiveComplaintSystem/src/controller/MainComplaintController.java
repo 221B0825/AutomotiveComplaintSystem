@@ -2,6 +2,7 @@ package controller;
 
 import dto.LoginResult;
 import model.CarList;
+import model.CarOwnerList;
 import model.ComplaintList;
 import model.User;
 import model.UserList;
@@ -10,16 +11,17 @@ import view.TUI;
 
 public class MainComplaintController {
 
-	private TUI TUI;
+	private TUI TUI = new TUI();
 	// Data
 	private CarList carList;
 	private ComplaintList complaintList;
 	private UserList userList;
+	private CarOwnerList carOwnerList;
 	
 
 	// Controller
 	private LoginController loginController;
-	private InissuanceComplainController inissuanceComplainController;
+	private IssuanceComplainController issuanceComplainController;
 	private RegisterComplaintController registerComplaintController;
 
 	private User loginUser;
@@ -28,10 +30,11 @@ public class MainComplaintController {
 		carList = new CarList();
 		userList = new UserList();
 		complaintList = new ComplaintList();
+		carOwnerList = new CarOwnerList();
 		
 		
 		loginController = new LoginController(TUI, userList);
-		inissuanceComplainController = new InissuanceComplainController(TUI);
+		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList);
 	}
 
@@ -142,11 +145,11 @@ public class MainComplaintController {
 		switch (selected) {
 		// 자동차 등록증 재발급신청
 		case "1":
-			inissuanceComplainController.carRegistrationReIssuance();
+			issuanceComplainController.carRegistrationReIssuance(loginUser);
 			break;
 		// 자동차 등록원부 등본(초본) 발급·열람신청
 		case "2":
-
+			
 			break;
 		// 자동차 말소사실증명서 발급신청
 		case "3":

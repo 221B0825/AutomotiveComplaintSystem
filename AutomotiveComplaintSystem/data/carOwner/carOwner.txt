@@ -1,0 +1,3 @@
+차량|대표소유자|공동소유자
+ABCDEFG|user1|NULL
+AAAAAAA|user2|user1

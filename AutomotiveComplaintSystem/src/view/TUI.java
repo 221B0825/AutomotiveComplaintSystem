@@ -1,6 +1,10 @@
 package view;
 
+import java.util.List;
+
 import controller.MainComplaintController;
+import model.Car;
+import model.User;
 
 public class TUI {
 
@@ -81,6 +85,15 @@ public class TUI {
 		System.out.println("[Yes/No]");
 	}
 
+	public void printMissingDocument(String fileName) {
+		// TODO Auto-generated method stub
+		System.out.println("'" + fileName + "'파일이 누락되었습니다.");
+	}
+
+	public void printSelectCarUpdateMessage() {
+		System.out.println("변경 신청할 자동차의 등록번호를 입력해주십시오");
+	}
+
 	// **********
 	// 발급 민원 TUI
 	// **********
@@ -91,12 +104,78 @@ public class TUI {
 
 	}
 
-	public void printMissingDocument(String fileName) {
-		// TODO Auto-generated method stub
-		System.out.println("'" + fileName + "'파일이 누락되었습니다.");
+	public void printIssuanceOptions() {
+		System.out.println("발급 민원 신청을 선택하세요:");
+		System.out.println("1. 자동차 등록증 재발급 신청");
+		// 다른 옵션들은 생략
 	}
 
-	public void printSelectCarUpdateMessage() {
-		System.out.println("변경 신청할 자동차의 등록번호를 입력해주십시오");
+	public void printReissueReasons() {
+		System.out.println("[재교부 사유 목록]");
+		System.out.println("1. 분실");
+		System.out.println("2. 훼손");
+		System.out.println("3. 도난");
+		System.out.println("4. 기타");
+		System.out.print("선택: ");
+	}
+
+	public void printReceiveMethod() {
+		System.out.println("수령 방법:");
+		System.out.println("수령물: 자동차 등록증");
+		System.out.println("수령인: 본인");
+		System.out.println("수령방법: 온라인 발급(인쇄)");
+	}
+
+	public void printSelectCarMessage() {
+		System.out.println("선택할 차량의 차량번호를 입력해 주십시오.");
+		System.out.print("입력: ");
+	}
+
+	public void printConfirmation() {
+		System.out.println("신청하시겠습니까? [Y/N]");
+		System.out.print("입력: ");
+	}
+
+	public void printMessage(String message) {
+		System.out.println(message);
+	}
+
+	public void printOwnerInfo(User owner) {
+		System.out.println("*****소유자 정보*****");
+		System.out.println("이름: " + owner.getName());
+		System.out.println("주민번호: " + owner.getSocialNumber());
+		System.out.println("휴대전화번호: " + owner.getPhoneNumber());
+		System.out.println("이메일: " + owner.getEmail());
+	}
+
+	public void printCarInfo(Car car) {
+		System.out.println("*****차량 정보*****");
+		System.out.println("차량 번호: " + car.getIdentificationNumber());
+		System.out.println("차량 모델: " + car.getName());
+		System.out.println("차량 색상: " + car.getColor());
+		System.out.println("차량 연식: " + car.getModelYear());
+	}
+
+	public void printPaymentOptions() {
+		System.out.println("결제 방법을 선택하세요:");
+		System.out.println("1. 카드");
+		System.out.println("2. 가상계좌");
+		System.out.print("입력: ");
+	}
+
+	public void printPaymentConfirmation() {
+		System.out.print("납부하시겠습니까? (Y/N): ");
+	}
+
+	public void printCarRegistrationCertificate(User owner, Car car) {
+		System.out.println("======================================");
+		System.out.println("[자동차 등록증]");
+		System.out.println("사용자 정보");
+		System.out.println("- 이름 : " + owner.getName());
+		System.out.println("- 주민번호 : " + owner.getSocialNumber());
+		System.out.println("차량 정보");
+		System.out.println("- 차량 번호 : " + car.getIdentificationNumber());
+		System.out.println("- 차종 : " + car.getName());
+		System.out.println("======================================");
 	}
 }

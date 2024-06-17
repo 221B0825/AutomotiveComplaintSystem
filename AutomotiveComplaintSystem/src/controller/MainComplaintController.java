@@ -17,7 +17,7 @@ public class MainComplaintController {
 	private TUI TUI = new TUI();
 	// Data
 	private CarList carList;
-	private UserList userList;
+	private UserList userList = new UserList();
 	private ArrayList<Complaint> complaintList;
 	private ArrayList<CarOwner> carOwnerList;
 
@@ -35,7 +35,7 @@ public class MainComplaintController {
 		carOwnerList = new ArrayList<CarOwner>();
 
 		loginController = new LoginController(TUI, userList);
-		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList);
+		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList, userList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
 				carOwnerList);
 	}

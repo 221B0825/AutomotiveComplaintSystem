@@ -9,22 +9,26 @@ import model.Admin;
 import model.Car;
 import model.CarList;
 import model.Complaint;
+import model.ComplaintList;
 import model.ComplaintStatus;
 import model.Customer;
 import model.User;
+import model.UserList;
 import view.TUI;
 
 public class RegisterComplaintController {
 
 	private TUI TUI;
 	private CarList carList;
+	private UserList userList;
 	private ComplaintList complaintList;
 	private Long complaintNumber;
 
-	public RegisterComplaintController(TUI TUI) {
-		carList = new CarList();
-		complaintList = new ComplaintList();
+	public RegisterComplaintController(TUI TUI, CarList carList, UserList userList, ComplaintList complaintList) {
 		this.TUI = TUI;
+		this.carList = carList;
+		this.userList = userList;
+		this.complaintList = complaintList;
 	}
 
 	public void register(User loginUser) {

@@ -81,6 +81,10 @@ public class TUI {
 		System.out.println("[Yes/No]");
 	}
 
+	// **********
+	// 발급 민원 TUI
+	// **********
+
 	public void printSelectCarStatus() {
 		System.out.println("차량 상태 선택");
 		System.out.println("1. ");

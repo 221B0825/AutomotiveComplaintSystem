@@ -10,6 +10,7 @@ public class MainComplaintController {
 	private TUI TUI;
 	private LoginController loginController = new LoginController();
 	private InissuanceComplainController inissuanceComplainController = new InissuanceComplainController(TUI);
+	private RegisterComplaintController registerComplaintController = new RegisterComplaintController(TUI);
 
 	private User loginUser;
 
@@ -83,7 +84,7 @@ public class MainComplaintController {
 		switch (selected) {
 		// 자동차 신규등록 신청
 		case "1":
-
+			registerComplaintController.register();
 			break;
 		// 자동차 변경등록 신청
 		case "2":

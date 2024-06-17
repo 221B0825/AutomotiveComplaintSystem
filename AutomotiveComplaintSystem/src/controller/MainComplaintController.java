@@ -1,23 +1,28 @@
 package controller;
 
+import dto.LoginResult;
+import model.User;
 import view.BasicMessage;
 import view.TUI;
 
 public class MainComplaintController {
 
 	private TUI TUI;
-	private LoginController loginController = new LoginController(); 
+	private LoginController loginController = new LoginController();
+
+	private User loginUser;
 
 	public MainComplaintController() {
 
 	}
 
 	public String login() {
-		String result = loginController.login();
-		if (result.equals(BasicMessage.LoginSuccess.getMessage())) {
-			return BasicMessage.LoginSuccess.getMessage();
+		LoginResult result = this.loginController.login();
+		if (result.getMessage().equals(BasicMessage.LoginSuccess.getMessage())) {
+			loginUser = result.getLoginUser();
+			return result.getMessage();
 		} else {
-			return result;
+			return result.getMessage();
 		}
 	}
 
@@ -53,7 +58,7 @@ public class MainComplaintController {
 
 				break;
 			case "5":
-				TUI.printExit();
+				TUI.printLogoutMessage(loginUser.getName());
 				return;
 
 			default:

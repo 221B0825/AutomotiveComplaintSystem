@@ -1,7 +1,8 @@
 package view;
 
 public enum BasicMessage {
-	LoginSuccess("LOGIN SUCCESS"), LoginFail("LOGIN FAIL"), JoinSuccess("JOIN SUCCESS"), JoinFail("JOIN FAIL"), Exit("EXIT SYSTEM");
+	LoginSuccess("LOGIN SUCCESS"), LoginFail("LOGIN FAIL"), JoinSuccess("JOIN SUCCESS"), JoinFail("JOIN FAIL"),
+	Logout("LOGOUT"), Exit("EXIT SYSTEM");
 
 	private final String message;
 

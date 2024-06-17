@@ -30,11 +30,15 @@ public class TUI {
 	}
 
 	public void showMainMenu() {
-		System.out.println("1.등록 민원 신청 2.발급 민원 신청 3.신청 승인 4.납부 5.종료");
+		System.out.println("1.등록 민원 신청 2.발급 민원 신청 3.신청 승인 4.납부 5.로그아웃");
 		System.out.print("입력: ");
+	}
+	
+	public void printLogoutMessage(String userName) {
+		System.out.println(userName+" :: "+BasicMessage.Logout.getMessage());
 	}
 
 	public void printExit() {
-		System.out.println(BasicMessage.Exit);
+		System.out.println(BasicMessage.Exit.getMessage());
 	}
 }

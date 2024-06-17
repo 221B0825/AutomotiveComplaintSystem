@@ -15,8 +15,6 @@ public class RegisterComplaintController {
 		this.TUI =TUI;
 	}
 
-
-
 	public void register() {
 
 	}

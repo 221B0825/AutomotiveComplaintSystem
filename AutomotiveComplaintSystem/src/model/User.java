@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class User {
 
 	Long id;
@@ -9,6 +11,7 @@ public class User {
 	String address;
 	String socialNumber;
 	String phoneNumber;
+	List<Car> carList;
 
 	
 	public User() {}

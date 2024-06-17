@@ -9,6 +9,7 @@ public class MainComplaintController {
 
 	private TUI TUI;
 	private LoginController loginController = new LoginController();
+	private InissuanceComplainController inissuanceComplainController = new InissuanceComplainController(TUI);
 
 	private User loginUser;
 
@@ -123,9 +124,9 @@ public class MainComplaintController {
 		switch (selected) {
 		// 자동차 등록증 재발급신청
 		case "1":
-
+			inissuanceComplainController.carRegistrationReIssuance();
 			break;
-		// 자동차 등록원부 등본(초본) 발급·열람신청	
+		// 자동차 등록원부 등본(초본) 발급·열람신청
 		case "2":
 
 			break;
@@ -133,11 +134,11 @@ public class MainComplaintController {
 		case "3":
 
 			break;
-		// 이륜차 사용폐지증명서 발급신청	
+		// 이륜차 사용폐지증명서 발급신청
 		case "4":
 
 			break;
-		// 이륜차 사용신고필증 재발급신청	
+		// 이륜차 사용신고필증 재발급신청
 		case "5":
 
 			break;

@@ -53,4 +53,10 @@ public class TUI {
 	public void printExit() {
 		System.out.println(BasicMessage.Exit.getMessage());
 	}
+
+	public void printSelectCarStatus() {
+		System.out.println("차량 상태 선택");
+		System.out.println("1. ");
+		
+	}
 }

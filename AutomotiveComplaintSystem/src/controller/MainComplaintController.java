@@ -3,6 +3,7 @@ package controller;
 import dto.LoginResult;
 import model.CarList;
 import model.ComplaintList;
+import model.Customer;
 import model.User;
 import model.UserList;
 import view.BasicMessage;
@@ -105,7 +106,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 변경등록 신청
 		case "2":
-
+			registerComplaintController.update((Customer)loginUser);
 			break;
 		// 자동차 양도증명
 		case "3":

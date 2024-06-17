@@ -12,6 +12,20 @@ public class Customer extends User {
 		super(id, email, password, name, address, socialNumber, phoneNumber);
 		this.carIDList = carIDList;
 	}
+
+
+
+	public List<String> getCarIDList() {
+		return carIDList;
+	}
+
+
+
+	public void setCarIDList(List<String> carIDList) {
+		this.carIDList = carIDList;
+	}
+
+
 	
 
 }

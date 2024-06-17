@@ -32,7 +32,7 @@ public class RegisterComplaintController {
 	}
 
 	public void register(User loginUser) {
-		TUI.printInputIdentificationNumber();
+		TUI.printSelectCarRegisterMessage();
 		String identificationNumber = view.DataInput.sc.nextLine();
 
 		Car car = carList.findByIdentificationNumber(identificationNumber);
@@ -69,6 +69,28 @@ public class RegisterComplaintController {
 
 	}
 
+	public void update(Customer loginUser) {
+
+		for(String carId : loginUser.getCarIDList()) {
+			Car car = carList.findByIdentificationNumber(carId);
+			System.out.println(car.toString());
+		}
+		
+		TUI.printSelectCarUpdateMessage(); // 
+		
+		String identificationNumber = view.DataInput.sc.nextLine();
+
+		Car car = carList.findByIdentificationNumber(identificationNumber);
+
+		if (car == null) { // 존재하지 않는 차량
+			TUI.printNotFoundCarMessage();
+			return;
+		}
+		
+		// 소유인 정보 변경
+		
+	}
+	
 	private boolean confirmChoice() {
 		TUI.printConfirmChoiceMessage();
 		String inputChoice = view.DataInput.sc.nextLine();
@@ -93,5 +115,8 @@ public class RegisterComplaintController {
 			return true;
 		return false;
 	}
+
+
+
 
 }

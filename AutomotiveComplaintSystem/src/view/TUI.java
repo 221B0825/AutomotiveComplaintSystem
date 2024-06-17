@@ -54,8 +54,8 @@ public class TUI {
 		System.out.println(BasicMessage.Exit.getMessage());
 	}
 
-	public void printInputIdentificationNumber() {
-		System.out.println("차량번호를 입력해주세요 : ");
+	public void printSelectCarRegisterMessage() {
+		System.out.println("등록 신청할 차량번호를 입력해주세요 : ");
 	}
 
 	public void printNotFoundCarMessage() {
@@ -90,5 +90,9 @@ public class TUI {
 	public void printMissingDocument(String fileName) {
 		// TODO Auto-generated method stub
 		System.out.println("'" + fileName + "'파일이 누락되었습니다.");
+	}
+
+	public void printSelectCarUpdateMessage() {
+		System.out.println("변경 신청할 자동차의 등록번호를 입력해주십시오");
 	}
 }

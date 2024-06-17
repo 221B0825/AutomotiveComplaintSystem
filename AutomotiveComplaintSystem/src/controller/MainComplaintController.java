@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+
 import dto.LoginResult;
 import model.CarList;
-import model.ComplaintList;
+import model.CarOwner;
+import model.Complaint;
 import model.Customer;
 import model.User;
 import model.UserList;
@@ -11,16 +14,16 @@ import view.TUI;
 
 public class MainComplaintController {
 
-	private TUI TUI;
+	private TUI TUI = new TUI();
 	// Data
 	private CarList carList;
-	private ComplaintList complaintList;
 	private UserList userList;
-	
+	private ArrayList<Complaint> complaintList;
+	private ArrayList<CarOwner> carOwnerList;
 
 	// Controller
 	private LoginController loginController;
-	private InissuanceComplainController inissuanceComplainController;
+	private IssuanceComplainController issuanceComplainController;
 	private RegisterComplaintController registerComplaintController;
 
 	private User loginUser;
@@ -28,12 +31,13 @@ public class MainComplaintController {
 	public MainComplaintController() {
 		carList = new CarList();
 		userList = new UserList();
-		complaintList = new ComplaintList();
-		
-		
+		complaintList = new ArrayList<Complaint>();
+		carOwnerList = new ArrayList<CarOwner>();
+
 		loginController = new LoginController(TUI, userList);
-		inissuanceComplainController = new InissuanceComplainController(TUI);
-		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList);
+		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList);
+		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
+				carOwnerList);
 	}
 
 	public void associate(TUI TUI) {
@@ -106,7 +110,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 변경등록 신청
 		case "2":
-			registerComplaintController.update((Customer)loginUser);
+			registerComplaintController.update((Customer) loginUser);
 			break;
 		// 자동차 양도증명
 		case "3":
@@ -143,7 +147,7 @@ public class MainComplaintController {
 		switch (selected) {
 		// 자동차 등록증 재발급신청
 		case "1":
-			inissuanceComplainController.carRegistrationReIssuance();
+			issuanceComplainController.carRegistrationReIssuance(loginUser);
 			break;
 		// 자동차 등록원부 등본(초본) 발급·열람신청
 		case "2":

@@ -13,7 +13,9 @@ public class User {
 	String phoneNumber;
 
 
-
+	public User() {
+		
+	}
 
 	public User(Long id, String email, String password, String name, String address, String socialNumber,
 			String phoneNumber) {

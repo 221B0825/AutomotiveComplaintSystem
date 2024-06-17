@@ -8,8 +8,8 @@ import java.util.List;
 import model.Admin;
 import model.Car;
 import model.CarList;
+import model.CarOwner;
 import model.Complaint;
-import model.ComplaintList;
 import model.ComplaintStatus;
 import model.Customer;
 import model.User;
@@ -21,14 +21,17 @@ public class RegisterComplaintController {
 	private TUI TUI;
 	private CarList carList;
 	private UserList userList;
-	private ComplaintList complaintList;
+	private ArrayList<Complaint> complaintList;
+	private ArrayList<CarOwner> carOwnerList;
 	private Long complaintNumber;
 
-	public RegisterComplaintController(TUI TUI, CarList carList, UserList userList, ComplaintList complaintList) {
+	public RegisterComplaintController(TUI TUI, CarList carList, UserList userList, ArrayList<Complaint> complaintList,
+			ArrayList<CarOwner> carOwnerList) {
 		this.TUI = TUI;
 		this.carList = carList;
 		this.userList = userList;
 		this.complaintList = complaintList;
+		this.carOwnerList = carOwnerList;
 	}
 
 	public void register(User loginUser) {
@@ -62,22 +65,25 @@ public class RegisterComplaintController {
 			return;
 		}
 
-
-		
-		complaintList.getComplaintList().add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(), (Admin)userList.findByEmail("admin"), (Customer) loginUser,
-				ComplaintStatus.PENDING_REVIEW));
+		complaintList.add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(),
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, ComplaintStatus.PENDING_REVIEW));
 
 	}
 
 	public void update(Customer loginUser) {
+		List<Car> userCarList = new ArrayList<Car>();
+		for(CarOwner carOwner : carOwnerList) {
+			if(	carOwner.getRepresentativeOwner() == loginUser )
+				userCarList.add(carOwner.getCar());
 
-		for(String carId : loginUser.getCarIDList()) {
-			Car car = carList.findByIdentificationNumber(carId);
+		}
+
+		for (Car car : userCarList) {
 			System.out.println(car.toString());
 		}
-		
-		TUI.printSelectCarUpdateMessage(); // 
-		
+
+		TUI.printSelectCarUpdateMessage(); //
+
 		String identificationNumber = view.DataInput.sc.nextLine();
 
 		Car car = carList.findByIdentificationNumber(identificationNumber);
@@ -86,11 +92,13 @@ public class RegisterComplaintController {
 			TUI.printNotFoundCarMessage();
 			return;
 		}
-		
+
 		// 소유인 정보 변경
-		
+
+		// 공동소유자 변경
+
 	}
-	
+
 	private boolean confirmChoice() {
 		TUI.printConfirmChoiceMessage();
 		String inputChoice = view.DataInput.sc.nextLine();
@@ -115,8 +123,5 @@ public class RegisterComplaintController {
 			return true;
 		return false;
 	}
-
-
-
 
 }

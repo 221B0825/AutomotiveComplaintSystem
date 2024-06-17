@@ -4,13 +4,16 @@ import dto.LoginResult;
 import model.User;
 import model.UserList;
 import view.BasicMessage;
+import view.TUI;
 
 public class LoginController {
 
 	private UserList userList;
+	private TUI TUI;
 
-	public LoginController() {
-		this.userList = new UserList();
+	public LoginController(TUI TUI, UserList userList) {
+		this.userList = userList;
+		this.TUI = TUI;
 	}
 
 	public LoginResult login() {

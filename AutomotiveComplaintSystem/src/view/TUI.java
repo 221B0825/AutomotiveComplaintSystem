@@ -54,9 +54,36 @@ public class TUI {
 		System.out.println(BasicMessage.Exit.getMessage());
 	}
 
+	public void printInputIdentificationNumber() {
+		System.out.println("차량번호를 입력해주세요 : ");
+	}
+
+	public void printNotFoundCarMessage() {
+		System.out.println("존재하지 않는 차량입니다.");
+	}
+
+	public void printNotFoundUserMessage() {
+		System.out.println("존재하지 않는 회원입니다.");
+
+	}
+
+	public void printCheckCarInformationMessage() {
+		System.out.println("본인의 차량 정보가 맞습니까?");
+
+	}
+
+	public void printCheckUserInformationMessage() {
+		System.out.println("신청자 본인의 정보가 맞습니까?");
+
+	}
+
+	public void printConfirmChoiceMessage() {
+		System.out.println("[Yes/No]");
+	}
+
 	public void printSelectCarStatus() {
 		System.out.println("차량 상태 선택");
 		System.out.println("1. ");
-		
+
 	}
 }

@@ -1,21 +1,42 @@
 package controller;
 
 import dto.LoginResult;
+import model.CarList;
+import model.ComplaintList;
 import model.User;
+import model.UserList;
 import view.BasicMessage;
 import view.TUI;
 
 public class MainComplaintController {
 
 	private TUI TUI;
-	private LoginController loginController = new LoginController();
-	private InissuanceComplainController inissuanceComplainController = new InissuanceComplainController(TUI);
-	private RegisterComplaintController registerComplaintController = new RegisterComplaintController(TUI);
+	// Data
+	private CarList carList;
+	private ComplaintList complaintList;
+	private UserList userList;
+	
+
+	// Controller
+	private LoginController loginController;
+	private InissuanceComplainController inissuanceComplainController;
+	private RegisterComplaintController registerComplaintController;
 
 	private User loginUser;
 
 	public MainComplaintController() {
+		carList = new CarList();
+		userList = new UserList();
+		complaintList = new ComplaintList();
+		
+		
+		loginController = new LoginController(TUI, userList);
+		inissuanceComplainController = new InissuanceComplainController(TUI);
+		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList);
+	}
 
+	public void associate(TUI TUI) {
+		this.TUI = TUI;
 	}
 
 	public String login() {
@@ -30,10 +51,6 @@ public class MainComplaintController {
 
 	public String join() {
 		return "";
-	}
-
-	public void associate(TUI TUI) {
-		this.TUI = TUI;
 	}
 
 	// *****************
@@ -84,7 +101,7 @@ public class MainComplaintController {
 		switch (selected) {
 		// 자동차 신규등록 신청
 		case "1":
-			registerComplaintController.register();
+			registerComplaintController.register(loginUser);
 			break;
 		// 자동차 변경등록 신청
 		case "2":

@@ -36,4 +36,13 @@ public class CarList {
 		return carList;
 	}
 
+	public Car findByIdentificationNumber(String identificationNumber) {
+		for(Car car : carList) {
+			if(car.getIdentificationNumber().equals(identificationNumber));
+				return car;
+		}
+		return null;
+		
+	}
+
 }

@@ -6,9 +6,10 @@ public class Car {
 	private String color;
 	private String modelYear;
 	private CarStatus carStatus;
-	
-	public Car() {}
-	
+
+	public Car() {
+	}
+
 	public Car(String identificationNumber, String name, String color, String modelYear, CarStatus carStatus) {
 		super();
 		this.identificationNumber = identificationNumber;
@@ -57,8 +58,12 @@ public class Car {
 	public void setCarStatus(CarStatus carStatus) {
 		this.carStatus = carStatus;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "============= 차량 정보 =============\n" + "차 명 : " + this.getName() + "  연식 : " + this.getModelYear()
+				+ "\n" + "차대번호 : " + this.getIdentificationNumber() + "색상 : " + this.getColor() + "\n" + "등록 상태 : "
+				+ this.getCarStatus();
+	}
+
 }

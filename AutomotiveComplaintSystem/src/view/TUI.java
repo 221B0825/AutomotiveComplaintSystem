@@ -86,4 +86,9 @@ public class TUI {
 		System.out.println("1. ");
 
 	}
+
+	public void printMissingDocument(String fileName) {
+		// TODO Auto-generated method stub
+		System.out.println("'" + fileName + "'파일이 누락되었습니다.");
+	}
 }

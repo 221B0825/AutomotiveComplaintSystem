@@ -58,14 +58,14 @@ public class RegisterComplaintController {
 		if (confirmChoice() == false) // 자신의 정보와 일치하지 않음
 			return;
 
-		if (confirmRegistrationDocument(loginUser) == false) {
+		if (confirmRegistrationDocument(loginUser) == false) { // 문서 확인
 			return;
 		}
 
 
 		
-		new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(), (Admin)userList.findByEmail("admin"), (Customer) loginUser,
-				ComplaintStatus.PENDING_REVIEW);
+		complaintList.getComplaintList().add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(), (Admin)userList.findByEmail("admin"), (Customer) loginUser,
+				ComplaintStatus.PENDING_REVIEW));
 
 	}
 
@@ -79,8 +79,10 @@ public class RegisterComplaintController {
 
 	private boolean confirmRegistrationDocument(User loginUser) {
 		for (String fileName : List.of("/주민등록등본", "/자동차제작증", "/의무보험 가입증명서")) {
-			if (isExistsDocument(new File("data/file/user" + loginUser.getId() + fileName)))
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + fileName))) {
+				TUI.printMissingDocument(fileName);
 				return false;
+			}
 		}
 
 		return true;

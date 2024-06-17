@@ -15,11 +15,17 @@ public class UserList {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNext()) {
 				// add user : read line
-				String id = sc.next();
-				String password = sc.next();
-				String name = sc.next();
 
-				User user = new User(id, password, name);
+				
+				String[] split = sc.nextLine().split("\\|");
+				Long id = Long.parseLong(split[0]);
+				String email = split[1];
+				String password = split[2];
+				String name = split[3];
+				String address = split[4];
+				String socialNumber = split[5];
+				String phoneNumber = split[6];
+				User user = new User(id, email, password, name, address, socialNumber, phoneNumber);
 				userList.add(user);
 			}
 		} catch (FileNotFoundException e) {
@@ -28,6 +34,7 @@ public class UserList {
 	}
 
 	public ArrayList<User> getUserList() {
+
 		return userList;
 	}
 

@@ -1,5 +1,6 @@
 package controller;
 
+import model.User;
 import model.UserList;
 
 public class LoginController {

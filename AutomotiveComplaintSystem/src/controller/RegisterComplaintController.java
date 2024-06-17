@@ -62,7 +62,9 @@ public class RegisterComplaintController {
 			return;
 		}
 
-		new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(), new Admin(""), (Customer) loginUser,
+
+		
+		new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(), (Admin)userList.findByEmail("admin"), (Customer) loginUser,
 				ComplaintStatus.PENDING_REVIEW);
 
 	}

@@ -28,7 +28,11 @@ public class UserList {
 				String phoneNumber = split[6];
 				List<String> carIDList = Arrays.asList(split[7].split(" "));
 
-				User user = new User(id, email, password, name, address, socialNumber, phoneNumber, carIDList);
+				User user;
+				if(email.equals("admin"))
+					user = new Admin(id, email, password, name, address, socialNumber, phoneNumber, "국토교통부");
+				else
+					user = new Customer(id, email, password, name, address, socialNumber, phoneNumber, carIDList);
 				userList.add(user);
 			}
 		} catch (FileNotFoundException e) {
@@ -39,6 +43,15 @@ public class UserList {
 	public ArrayList<User> getUserList() {
 
 		return userList;
+	}
+
+
+	public User findByEmail(String email) {
+		for(User user : userList) {
+			if(user.getEmail().equals(email))
+				return user;
+		}
+		return null;
 	}
 
 }

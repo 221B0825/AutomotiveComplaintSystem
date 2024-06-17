@@ -11,13 +11,13 @@ public class User {
 	String address;
 	String socialNumber;
 	String phoneNumber;
-	List<Car> carList;
+	List<String> carIDList;
 
 	public User() {
 	}
 
 	public User(Long id, String email, String password, String name, String address, String socialNumber,
-			String phoneNumber) {
+			String phoneNumber, List<String> carIDList) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -26,6 +26,7 @@ public class User {
 		this.address = address;
 		this.socialNumber = socialNumber;
 		this.phoneNumber = phoneNumber;
+		this.carIDList = carIDList;
 	}
 
 	public Long getId() {
@@ -82,6 +83,14 @@ public class User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public List<String> getCarIDList() {
+		return carIDList;
+	}
+
+	public void setCarIDList(List<String> carIDList) {
+		this.carIDList = carIDList;
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserList {
@@ -16,7 +18,6 @@ public class UserList {
 			while (sc.hasNext()) {
 				// add user : read line
 
-				
 				String[] split = sc.nextLine().split("\\|");
 				Long id = Long.parseLong(split[0]);
 				String email = split[1];
@@ -25,7 +26,9 @@ public class UserList {
 				String address = split[4];
 				String socialNumber = split[5];
 				String phoneNumber = split[6];
-				User user = new User(id, email, password, name, address, socialNumber, phoneNumber);
+				List<String> carIDList = Arrays.asList(split[7].split(" "));
+
+				User user = new User(id, email, password, name, address, socialNumber, phoneNumber, carIDList);
 				userList.add(user);
 			}
 		} catch (FileNotFoundException e) {

@@ -14,16 +14,16 @@ public class ComplaintList {
 		try {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNext()) {
-				// add user : read line
-
+				// add complaint : read line
 				String[] split = sc.nextLine().split("\\|");
 				Long id = Long.parseLong(split[0]);
 				String receptionNumber = split[1];
 				String serviceName = split[2];
 				String date = split[3];
-				String admin = split[4];
-				String customer = split[5];
+				String adminID = split[4];
+				String customerID = split[5];
 				String complaintStatus = split[6];
+
 				Complaint complaint = new Complaint();
 				complaintList.add(complaint);
 			}

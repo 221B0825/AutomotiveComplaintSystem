@@ -1,1 +1,4 @@
 ABCDEFG|포르쉐|검정|2018
+AAAAAAA|산타페|흰색|2019
+BBBBBBB|아반떼|회색|2020
+CCCCCCC|소나타|검정|2021

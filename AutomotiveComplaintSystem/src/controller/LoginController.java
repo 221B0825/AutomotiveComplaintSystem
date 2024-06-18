@@ -18,19 +18,57 @@ public class LoginController {
 
 	public LoginResult login() {
 
-		// test result
-		LoginResult result = new LoginResult(BasicMessage.LoginSuccess.getMessage(), userList.getUserList().get(3));
-		// login logic
-		// userList 검사해서 유저 확인
-		// ---------------------------
-		// if login success
-		// return BasicMessage.LoginSuccess.getMessage();
-		// ---------------------------
-		// login 실패 이유
-		// 1. 아이디 없음
+		// default
+		LoginResult result = new LoginResult(BasicMessage.LoginFail.getMessage(), null);
+
+		TUI.printMessage("[아이디(이메일)] ");
+		String inputEmail = view.DataInput.sc.nextLine();
+		TUI.printMessage("[비밀번호]");
+		String password = view.DataInput.sc.nextLine();
+
+		for (User user : userList.getUserList()) {
+			if (user.getEmail().equals(inputEmail)) {
+				if (user.getPassword().equals(password)) {
+					return new LoginResult(BasicMessage.LoginSuccess.getMessage(), user);
+				} else {
+					return new LoginResult(new String("비밀번호 틀림"), null);
+				}
+
+			}
+		}
 		return result;
 
-		// 2. 비밀번호 틀림
+	}
 
+	public String join() {
+		TUI.printMessage("[아이디(이메일)] ");
+		String inputEmail = view.DataInput.sc.nextLine();
+
+		for (User user : userList.getUserList()) {
+			if (user.getEmail().equals(inputEmail)) {
+				return BasicMessage.JoinFail.getMessage() + " : 이미 회원가입된 이메일";
+
+			}
+		}
+		long id = userList.getUserList().get(userList.getUserList().size() - 1).getId() + 1;
+
+		TUI.printMessage("[비밀번호]");
+		String password = view.DataInput.sc.nextLine();
+
+		TUI.printMessage("[이름]");
+		String name = view.DataInput.sc.nextLine();
+
+		TUI.printMessage("[사는 지역(구)]");
+		String address = view.DataInput.sc.nextLine();
+
+		TUI.printMessage("[주민번호]");
+		String socialNumber = view.DataInput.sc.nextLine();
+
+		TUI.printMessage("[전화번호]");
+		String phoneNumber = view.DataInput.sc.nextLine();
+
+		userList.getUserList().add(new User(id, inputEmail, password, name, address, socialNumber, phoneNumber));
+
+		return BasicMessage.JoinSuccess.getMessage();
 	}
 }

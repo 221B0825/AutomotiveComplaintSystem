@@ -113,7 +113,7 @@ public class MainComplaintController {
 					adminController.showComplaintList();
 					break;
 				case "2":
-
+					adminController.approveComplaint();
 					break;
 
 				default:

@@ -7,6 +7,8 @@ public class Complaint {
 	private String serviceName;
 	private LocalDateTime date;
 	private Admin admin;
+	
+	private String carID;
 	// 대표 소유자
 	private Customer representativeOwner;
 	// 공동 소유자
@@ -18,7 +20,7 @@ public class Complaint {
 
 
 	public Complaint(Long receptionNumber, String serviceName, LocalDateTime date, Admin admin,
-			Customer representativeOwner, Customer coOwner, ComplaintStatus complaintStatus) {
+			Customer representativeOwner, Customer coOwner, ComplaintStatus complaintStatus, String carID) {
 		super();
 		this.receptionNumber = receptionNumber;
 		this.serviceName = serviceName;
@@ -27,6 +29,7 @@ public class Complaint {
 		this.representativeOwner = representativeOwner;
 		this.coOwner = coOwner;
 		this.complaintStatus = complaintStatus;
+		this.carID = carID;
 	}
 
 
@@ -99,12 +102,25 @@ public class Complaint {
 
 
 
+	public String getCarID() {
+		return carID;
+	}
+
+
+
+	public void setCarID(String carID) {
+		this.carID = carID;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Complaint [receptionNumber=" + receptionNumber + ", serviceName=" + serviceName + ", date=" + date
-				+ ", admin=" + admin + ", representativeOwner=" + representativeOwner + ", coOwner=" + coOwner
-				+ ", complaintStatus=" + complaintStatus + "]";
+				+ ", admin=" + admin + ", carID=" + carID + ", representativeOwner=" + representativeOwner
+				+ ", coOwner=" + coOwner + ", complaintStatus=" + complaintStatus + "]";
 	}
+
 
 	
 }

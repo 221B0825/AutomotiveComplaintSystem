@@ -247,7 +247,40 @@ public class RegisterComplaintController {
 				ComplaintStatus.PENDING_APPROVAL));
 	}
 	
+	public void Cancellation(Customer loginUser) {
+		TUI.printMessage("자동차 말소 등록 신청을 시작합니다.");
+
+		printCarList(loginUser); // 차량 목록 출력
+		Car selectedCar = selectCar();
+
+		if (selectedCar == null) { // 존재하지 않는 차량
+			TUI.printNotFoundCarMessage();
+			return;
+		}
+
+		TUI.printMessage("자동차 정보"); 
+		TUI.printMessage(selectedCar.toString());
+		
+		
+		Customer representativeOwner = null;
+
+		for (CarOwner carOwner : carOwnerList) { // 차의 대표소유자 조회
+			if (carOwner.getCar() == selectedCar) {
+				representativeOwner = carOwner.getRepresentativeOwner();
+				TUI.printRepresentativeOwner(representativeOwner);
+			}
+		}
+		// 말소 등록 문서 확인
+		confirmCancellationDocument(loginUser);
+
+		// 말소 등록 민원		
+		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null,
+				ComplaintStatus.PENDING_REVIEW));
+	}
 	
+
+
 	private Car selectCar() {
 		TUI.printSelectCarUpdateMessage();
 		String identificationNumber = view.DataInput.sc.nextLine();
@@ -284,14 +317,14 @@ public class RegisterComplaintController {
 	private boolean confirmChoice() {
 		TUI.printConfirmChoiceMessage();
 		String inputChoice = view.DataInput.sc.nextLine();
-		if (inputChoice.equalsIgnoreCase("YES"))
+		if (inputChoice.equalsIgnoreCase("YES") || inputChoice.equalsIgnoreCase("Y"))
 			return true;
 		return false;
 	}
 
 	private boolean confirmRegistrationDocument(User loginUser) {
-		for (String fileName : List.of("/주민등록등본", "/자동차제작증", "/의무보험 가입증명서")) {
-			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + fileName))) {
+		for (String fileName : List.of("주민등록등본.txt", "자동차제작증.txt", "의무보험 가입증명서.txt")) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
 				TUI.printMissingDocument(fileName);
 				return false;
 			}
@@ -303,8 +336,21 @@ public class RegisterComplaintController {
 	}
 
 	private boolean confirmTransferDocument(User loginUser) {
-		for (String fileName : List.of("/의무보험 가입증명서")) {
-			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + fileName))) {
+		for (String fileName : List.of("의무보험 가입증명서.txt")) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
+				TUI.printMissingDocument(fileName);
+				return false;
+			}
+			else
+				TUI.printMessage("문서확인 : " + fileName);
+		}
+
+		return true;
+	}
+	
+	private boolean confirmCancellationDocument(Customer loginUser) {
+		for (String fileName : List.of("폐차인수증명서.txt", "주민등록등본.txt")) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
 				TUI.printMissingDocument(fileName);
 				return false;
 			}
@@ -320,6 +366,8 @@ public class RegisterComplaintController {
 			return true;
 		return false;
 	}
+
+
 
 
 }

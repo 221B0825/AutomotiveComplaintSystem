@@ -7,21 +7,29 @@ public class Complaint {
 	private String serviceName;
 	private LocalDateTime date;
 	private Admin admin;
-	private Customer customer;
+	// 대표 소유자
+	private Customer representativeOwner;
+	// 공동 소유자
+	private Customer coOwner;
 	private ComplaintStatus complaintStatus;
 	
 	public Complaint() {}
 	
-	public Complaint(Long receptionNumber, String serviceName, LocalDateTime date, Admin admin, Customer customer,
-			ComplaintStatus complaintStatus) {
+
+
+	public Complaint(Long receptionNumber, String serviceName, LocalDateTime date, Admin admin,
+			Customer representativeOwner, Customer coOwner, ComplaintStatus complaintStatus) {
 		super();
 		this.receptionNumber = receptionNumber;
 		this.serviceName = serviceName;
 		this.date = date;
 		this.admin = admin;
-		this.customer = customer;
+		this.representativeOwner = representativeOwner;
+		this.coOwner = coOwner;
 		this.complaintStatus = complaintStatus;
 	}
+
+
 
 	public Long getReceptionNumber() {
 		return receptionNumber;
@@ -55,13 +63,31 @@ public class Complaint {
 		this.admin = admin;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+
+
+	public Customer getRepresentativeOwner() {
+		return representativeOwner;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+
+
+	public void setRepresentativeOwner(Customer representativeOwner) {
+		this.representativeOwner = representativeOwner;
 	}
+
+
+
+	public Customer getCoOwner() {
+		return coOwner;
+	}
+
+
+
+	public void setCoOwner(Customer coOwner) {
+		this.coOwner = coOwner;
+	}
+
+
 
 	public ComplaintStatus getComplaintStatus() {
 		return complaintStatus;

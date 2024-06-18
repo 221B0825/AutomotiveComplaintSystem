@@ -4,6 +4,7 @@ import java.util.List;
 
 import controller.MainComplaintController;
 import model.Car;
+import model.Customer;
 import model.User;
 
 public class TUI {
@@ -178,4 +179,44 @@ public class TUI {
 		System.out.println("- 차종 : " + car.getName());
 		System.out.println("======================================");
 	}
+
+
+	public void printRepresentativeOwner(Customer representativeOwner) {
+		System.out.println("대표 소유자 정보");
+		System.out.println(representativeOwner.toString());
+	}
+	
+	public void printCoOwnerInformation(Customer coOwner) {
+		System.out.println("공동 소유자 정보");
+		System.out.println(coOwner.toString());
+
+	}
+
+
+	public void printChangeOwnerSelectMessage() {
+		System.out.println("변경할 소유인을 선택해주세요(1.대표소유자 2.공동소유자) >");
+	}
+
+	public void printEmailInputMessage() {
+		System.out.print("e-mail을 입력해주세요 > ");
+		
+	}
+
+	public void printAddressInputMessage() {
+		System.out.print("주소를 입력해주세요 > ");
+	}
+
+	public void printOwnerInfoChangeAskMessage() {
+		System.out.print("소유인 정보를 변경하시겠습니까? > ");
+	}
+
+	public void printChangeRepresentativeOwnerSelectMessage() {
+		System.out.print("대표 소유자를 변경하시겠습니까? > ");
+
+	}
+
+	public void printPrimaryOwnerRestrictionMessage() {
+		System.out.println("대표소유자만이 변경할 수 있습니다.");
+	}
+
 }

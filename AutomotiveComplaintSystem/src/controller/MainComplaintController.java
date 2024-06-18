@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dto.LoginResult;
+
 import model.Car;
+import model.AssignmentCetification;
 import model.CarList;
 import model.CarOwner;
 import model.CarStatus;
@@ -25,6 +27,7 @@ public class MainComplaintController {
 	private UserList userList = new UserList();
 	private ArrayList<Complaint> complaintList;
 	private ArrayList<CarOwner> carOwnerList;
+	private ArrayList<AssignmentCetification> assignmentCetificationList;
 
 	// Controller
 	private LoginController loginController;
@@ -38,6 +41,7 @@ public class MainComplaintController {
 		userList = new UserList();
 		complaintList = new ArrayList<Complaint>();
 		carOwnerList = new ArrayList<CarOwner>();
+		assignmentCetificationList = new ArrayList<AssignmentCetification>();
 		
 		// init carOwner
 		File file = new File("data/carOwner/carOwner.txt");
@@ -45,7 +49,7 @@ public class MainComplaintController {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNext()) {
 				// add user : read line
-
+		
 				String[] split = sc.nextLine().split("\\|");
 				String identificationNumber = split[0];
 				String representativeOwner = split[1];
@@ -66,7 +70,7 @@ public class MainComplaintController {
 		loginController = new LoginController(TUI, userList);
 		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList, userList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
-				carOwnerList);
+				carOwnerList, assignmentCetificationList);
 	}
 
 	public void associate(TUI TUI) {
@@ -143,7 +147,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 양도증명
 		case "3":
-
+			registerComplaintController.assignment((Customer)loginUser);
 			break;
 		// 자동차 이전등록신청
 		case "4":

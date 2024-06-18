@@ -33,23 +33,25 @@ public class MainComplaintController {
 	private LoginController loginController;
 	private IssuanceComplainController issuanceComplainController;
 	private RegisterComplaintController registerComplaintController;
+	
+	private AdminController adminController;
 
 	private User loginUser;
 
 	public MainComplaintController() {
 		carList = new CarList();
 		userList = new UserList();
-		complaintList = new ArrayList<Complaint>();
+		complaintList = new ArrayList<Complaint>();		
 		carOwnerList = new ArrayList<CarOwner>();
 		assignmentCetificationList = new ArrayList<AssignmentCetification>();
-		
+
 		// init carOwner
 		File file = new File("data/carOwner/carOwner.txt");
 		try {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNext()) {
 				// add user : read line
-		
+
 				String[] split = sc.nextLine().split("\\|");
 				String identificationNumber = split[0];
 				String representativeOwner = split[1];
@@ -67,11 +69,13 @@ public class MainComplaintController {
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		loginController = new LoginController(TUI, userList);
 		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList, userList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
 				carOwnerList, assignmentCetificationList);
+		
+		adminController = new AdminController(TUI, userList, carList, carOwnerList, complaintList);
 	}
 
 	public void associate(TUI TUI) {
@@ -99,37 +103,58 @@ public class MainComplaintController {
 	// *****************
 	public void run() {
 
-		while (true) {
-			// show MainMenu
-			this.TUI.printMainMenu();
-			String selected = view.DataInput.sc.nextLine();
-			switch (selected) {
-			// 등록민원 신청
-			case "1":
-				registerationComplain();
-				break;
-			// 발급/열람 민원 신청
-			case "2":
-				issuanceComplain();
-				break;
-			// 사용자 신청 승인
-			case "3":
+		if (loginUser.getEmail().equals("admin")) {
+			
+			while(true) {
+				this.TUI.printAdminMenu();
+				String selected = view.DataInput.sc.nextLine();
+				switch (selected) {
+				case "1":
+					adminController.showComplaintList();
+					break;
+				case "2":
+					
+					break;
 
-				break;
-			// 납부
-			case "4":
-
-				break;
-			// 로그아웃
-			case "5":
-				TUI.printLogoutMessage(loginUser.getName());
-				return;
-
-			default:
-				TUI.printWrongInputMessage();
-				break;
+				default:
+					break;
+				}
 			}
 
+		} else {
+
+			while (true) {
+				// show MainMenu
+				this.TUI.printMainMenu();
+				String selected = view.DataInput.sc.nextLine();
+				switch (selected) {
+				// 등록민원 신청
+				case "1":
+					registerationComplain();
+					break;
+				// 발급/열람 민원 신청
+				case "2":
+					issuanceComplain();
+					break;
+				// 사용자 신청 승인
+				case "3":
+
+					break;
+				// 납부
+				case "4":
+
+					break;
+				// 로그아웃
+				case "5":
+					TUI.printLogoutMessage(loginUser.getName());
+					return;
+
+				default:
+					TUI.printWrongInputMessage();
+					break;
+				}
+
+			}
 		}
 	}
 
@@ -149,11 +174,11 @@ public class MainComplaintController {
 			break;
 		// 자동차 양도증명
 		case "3":
-			registerComplaintController.assignment((Customer)loginUser);
+			registerComplaintController.assignment((Customer) loginUser);
 			break;
 		// 자동차 이전등록신청
 		case "4":
-			registerComplaintController.transfer((Customer)loginUser);
+			registerComplaintController.transfer((Customer) loginUser);
 
 			break;
 		// 저당권설정등록신청
@@ -195,7 +220,7 @@ public class MainComplaintController {
 			break;
 		// 이륜차 사용폐지증명서 발급신청
 		case "4":
-			
+
 			break;
 		// 이륜차 사용신고필증 재발급신청
 		case "5":

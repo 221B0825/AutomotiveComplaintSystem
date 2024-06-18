@@ -212,4 +212,10 @@ public class TUI {
 		System.out.println("대표소유자만이 변경할 수 있습니다.");
 	}
 
+	public void printAdminMenu() {
+		System.out.println("========관리자 메뉴========");
+		System.out.println("1.민원 신청 조회 2.민원 승인");
+		
+	}
+
 }

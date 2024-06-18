@@ -96,6 +96,15 @@ public class Complaint {
 	public void setComplaintStatus(ComplaintStatus complaintStatus) {
 		this.complaintStatus = complaintStatus;
 	}
-	
+
+
+
+	@Override
+	public String toString() {
+		return "Complaint [receptionNumber=" + receptionNumber + ", serviceName=" + serviceName + ", date=" + date
+				+ ", admin=" + admin + ", representativeOwner=" + representativeOwner + ", coOwner=" + coOwner
+				+ ", complaintStatus=" + complaintStatus + "]";
+	}
+
 	
 }

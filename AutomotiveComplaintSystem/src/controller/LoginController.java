@@ -19,7 +19,7 @@ public class LoginController {
 	public LoginResult login() {
 
 		// test result
-		LoginResult result = new LoginResult(BasicMessage.LoginSuccess.getMessage(), userList.getUserList().get(1));
+		LoginResult result = new LoginResult(BasicMessage.LoginSuccess.getMessage(), userList.getUserList().get(3));
 		// login logic
 		// userList 검사해서 유저 확인
 		// ---------------------------

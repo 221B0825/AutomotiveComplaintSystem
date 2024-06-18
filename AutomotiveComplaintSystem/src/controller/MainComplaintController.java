@@ -1,10 +1,15 @@
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import dto.LoginResult;
+import model.Car;
 import model.CarList;
 import model.CarOwner;
+import model.CarStatus;
 import model.Complaint;
 import model.Customer;
 import model.User;
@@ -33,7 +38,31 @@ public class MainComplaintController {
 		userList = new UserList();
 		complaintList = new ArrayList<Complaint>();
 		carOwnerList = new ArrayList<CarOwner>();
+		
+		// init carOwner
+		File file = new File("data/carOwner/carOwner.txt");
+		try {
+			Scanner sc = new Scanner(file);
+			while (sc.hasNext()) {
+				// add user : read line
 
+				String[] split = sc.nextLine().split("\\|");
+				String identificationNumber = split[0];
+				String representativeOwner = split[1];
+				String coOwner = split[2];
+				Car car = carList.findByIdentificationNumber(identificationNumber);
+				// change status
+				car.setCarStatus(CarStatus.REGISTER);
+				Customer ROwner = (Customer) userList.findByEmail(representativeOwner);
+				Customer COwner = (Customer) userList.findByEmail(coOwner);
+
+				CarOwner carOwner = new CarOwner(car, ROwner, COwner);
+				carOwnerList.add(carOwner);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		loginController = new LoginController(TUI, userList);
 		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList, userList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
@@ -149,9 +178,9 @@ public class MainComplaintController {
 		case "1":
 			issuanceComplainController.carRegistrationReIssuance(loginUser);
 			break;
-		// 자동차 등록원부 등본(초본) 발급·열람신청
+		// 자동차 등록원부 등본(초본) 발급 신청
 		case "2":
-
+			issuanceComplainController.carRegistration(loginUser);
 			break;
 		// 자동차 말소사실증명서 발급신청
 		case "3":

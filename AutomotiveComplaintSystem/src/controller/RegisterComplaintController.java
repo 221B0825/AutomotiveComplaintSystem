@@ -26,7 +26,7 @@ public class RegisterComplaintController {
 	private ArrayList<Complaint> complaintList;
 	private ArrayList<CarOwner> carOwnerList;
 	private ArrayList<AssignmentCetification> assignmentCetificationList;
-	private Long complaintNumber;
+	private Long complaintNumber = 0L;
 
 	public RegisterComplaintController(TUI TUI, CarList carList, UserList userList, ArrayList<Complaint> complaintList,
 			ArrayList<CarOwner> carOwnerList, ArrayList<AssignmentCetification> assignmentCetificationList) {
@@ -74,11 +74,9 @@ public class RegisterComplaintController {
 		String socialNumber = DataInput.sc.nextLine();
 
 		User coOwner = userList.findBySocialNumber(socialNumber);
-
 		complaintList.add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(),
 				(Admin) userList.findByEmail("admin"), (Customer) loginUser, (Customer) coOwner,
 				ComplaintStatus.PENDING_REVIEW));
-
 	}
 
 	public void update(Customer loginUser) {
@@ -179,58 +177,52 @@ public class RegisterComplaintController {
 		TUI.printMessage("판매일");
 		String saleDate = DataInput.sc.nextLine();
 		TUI.printMessage("자동차 인도 날짜");
-		String carDeliveryDate =  DataInput.sc.nextLine();
-		
+		String carDeliveryDate = DataInput.sc.nextLine();
+
 		TUI.printMessage("양도증명 신청하시겠습니까? > ");
-		
-		if (confirmChoice() == false) // 
+
+		if (confirmChoice() == false) //
 			return;
-		
+
 		// 양도증명 등록
-		assignmentCetificationList.add(new AssignmentCetification(selectedCar, representativeOwner, (Customer)transferee, salePrice,saleDate ,carDeliveryDate));
-		
-		
+		assignmentCetificationList.add(new AssignmentCetification(selectedCar, representativeOwner,
+				(Customer) transferee, salePrice, saleDate, carDeliveryDate));
+
 	}
 
 	public void transfer(Customer loginUser) {
 		TUI.printMessage("이전 신청을 시작합니다.");
-		
+
 		TUI.printMessage("이전 신청할 차량번호를 선택하십시오  > ");
-		
+
 		Car selectedCar = selectCar();
-		
+
 		AssignmentCetification selectedAssignmentCetification = null;
 		// 양도증명 내역 불러오기
-		for(AssignmentCetification assignmentCetification : assignmentCetificationList) {
-			if(assignmentCetification.getCar() == selectedCar) {
+		for (AssignmentCetification assignmentCetification : assignmentCetificationList) {
+			if (assignmentCetification.getCar() == selectedCar) {
 				selectedAssignmentCetification = assignmentCetification;
 			}
 		}
 		// 양수인 확인 및 출력
 		Customer transferee = selectedAssignmentCetification.getTransferee();
-		if(transferee != loginUser) {
+		if (transferee != loginUser) {
 			System.out.println("양수인이 아닙니다.");
 			return;
 		}
-		
+
 		TUI.printMessage("양수인 정보");
 		TUI.printMessage(transferee.toString());
 
 		// 양도인 정보 출력
 		TUI.printMessage("양도인 정보");
 		TUI.printMessage(selectedAssignmentCetification.getTransferor().toString());
-		
-		
+
 		// 양도증명 내역 출력
 		selectedAssignmentCetification.printAssignmentCertificationInfo();
-		
 
-		
 		// 파일 입력 확인
 		confirmTransferDocument(loginUser);
-
-		
-		
 
 		// 공동 소유자 조회
 		Customer coOwner = null;
@@ -239,14 +231,13 @@ public class RegisterComplaintController {
 				coOwner = carOwner.getCoOwner();
 			}
 		}
-		
-		
-		// 이전 민원 등록		
+
+		// 이전 민원 등록
 		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
 				(Admin) userList.findByEmail("admin"), (Customer) loginUser, coOwner,
 				ComplaintStatus.PENDING_APPROVAL));
 	}
-	
+
 	public void Cancellation(Customer loginUser) {
 		TUI.printMessage("자동차 말소 등록 신청을 시작합니다.");
 
@@ -258,10 +249,9 @@ public class RegisterComplaintController {
 			return;
 		}
 
-		TUI.printMessage("자동차 정보"); 
+		TUI.printMessage("자동차 정보");
 		TUI.printMessage(selectedCar.toString());
-		
-		
+
 		Customer representativeOwner = null;
 
 		for (CarOwner carOwner : carOwnerList) { // 차의 대표소유자 조회
@@ -273,13 +263,10 @@ public class RegisterComplaintController {
 		// 말소 등록 문서 확인
 		confirmCancellationDocument(loginUser);
 
-		// 말소 등록 민원		
+		// 말소 등록 민원
 		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
-				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null,
-				ComplaintStatus.PENDING_REVIEW));
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null, ComplaintStatus.PENDING_REVIEW));
 	}
-	
-
 
 	private Car selectCar() {
 		TUI.printSelectCarUpdateMessage();
@@ -324,11 +311,10 @@ public class RegisterComplaintController {
 
 	private boolean confirmRegistrationDocument(User loginUser) {
 		for (String fileName : List.of("주민등록등본.txt", "자동차제작증.txt", "의무보험 가입증명서.txt")) {
-			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/" + fileName))) {
 				TUI.printMissingDocument(fileName);
 				return false;
-			}
-			else
+			} else
 				TUI.printMessage("문서확인 : " + fileName);
 		}
 
@@ -337,37 +323,32 @@ public class RegisterComplaintController {
 
 	private boolean confirmTransferDocument(User loginUser) {
 		for (String fileName : List.of("의무보험 가입증명서.txt")) {
-			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/" + fileName))) {
 				TUI.printMissingDocument(fileName);
 				return false;
-			}
-			else
+			} else
 				TUI.printMessage("문서확인 : " + fileName);
 		}
 
 		return true;
 	}
-	
+
 	private boolean confirmCancellationDocument(Customer loginUser) {
 		for (String fileName : List.of("폐차인수증명서.txt", "주민등록등본.txt")) {
-			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/"  + fileName))) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + "/" + fileName))) {
 				TUI.printMissingDocument(fileName);
 				return false;
-			}
-			else
+			} else
 				TUI.printMessage("문서확인 : " + fileName);
 		}
 
 		return true;
 	}
-	
+
 	private boolean isExistsDocument(File file) {
 		if (file.exists())
 			return true;
 		return false;
 	}
-
-
-
 
 }

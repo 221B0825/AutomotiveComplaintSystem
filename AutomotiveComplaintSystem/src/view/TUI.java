@@ -47,7 +47,7 @@ public class TUI {
 
 	public void printInissuanceComplainMenu() {
 		System.out.println(
-				"1.자동차 등록증 재발급신청 2.자동차 등록원부 등본(초본) 발급·열람신청 3.자동차 말소사실증명서 발급신청 4.이륜차 사용폐지증명서 발급신청 5.이륜차 사용신고필증 재발급신청");
+				"1.자동차 등록증 재발급신청 2.자동차 등록원부 등본(초본) 발급 신청 3.자동차 말소사실증명서 발급신청 4.이륜차 사용폐지증명서 발급신청 5.이륜차 사용신고필증 재발급신청");
 		System.out.print("입력: ");
 	}
 
@@ -101,14 +101,9 @@ public class TUI {
 
 	public void printSelectCarStatus() {
 		System.out.println("차량 상태 선택");
-		System.out.println("1. ");
-
-	}
-
-	public void printIssuanceOptions() {
-		System.out.println("발급 민원 신청을 선택하세요:");
-		System.out.println("1. 자동차 등록증 재발급 신청");
-		// 다른 옵션들은 생략
+		System.out.println("1. 운행 차량");
+		System.out.println("1. 말소 차량");
+		System.out.print("선택: ");
 	}
 
 	public void printReissueReasons() {
@@ -168,9 +163,9 @@ public class TUI {
 		System.out.print("납부하시겠습니까? (Y/N): ");
 	}
 
-	public void printCarRegistrationCertificate(User owner, Car car) {
+	public void printCarRegistrationCertificate(Car car, User owner, String type) {
 		System.out.println("======================================");
-		System.out.println("[자동차 등록증]");
+		System.out.println("[" + type + "]");
 		System.out.println("사용자 정보");
 		System.out.println("- 이름 : " + owner.getName());
 		System.out.println("- 주민번호 : " + owner.getSocialNumber());
@@ -180,18 +175,16 @@ public class TUI {
 		System.out.println("======================================");
 	}
 
-
 	public void printRepresentativeOwner(Customer representativeOwner) {
 		System.out.println("대표 소유자 정보");
 		System.out.println(representativeOwner.toString());
 	}
-	
+
 	public void printCoOwnerInformation(Customer coOwner) {
 		System.out.println("공동 소유자 정보");
 		System.out.println(coOwner.toString());
 
 	}
-
 
 	public void printChangeOwnerSelectMessage() {
 		System.out.println("변경할 소유인을 선택해주세요(1.대표소유자 2.공동소유자) >");
@@ -199,7 +192,7 @@ public class TUI {
 
 	public void printEmailInputMessage() {
 		System.out.print("e-mail을 입력해주세요 > ");
-		
+
 	}
 
 	public void printAddressInputMessage() {

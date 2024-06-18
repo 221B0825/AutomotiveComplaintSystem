@@ -89,7 +89,8 @@ public class MainComplaintController {
 	}
 
 	public String join() {
-		return "";
+		String result = this.loginController.join();
+		return result;
 	}
 
 	// *****************

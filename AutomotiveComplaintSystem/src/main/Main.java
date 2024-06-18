@@ -33,10 +33,11 @@ public class Main {
 				}
 				break;
 			case "2":
-				if (MC.join().equals(BasicMessage.JoinSuccess.getMessage())) {
+				String joinResult = MC.join();
+				if (joinResult.equals(BasicMessage.JoinSuccess.getMessage())) {
 					continue;
 				} else {
-					System.out.println(MC.join());
+					System.out.println(joinResult);
 				}
 				break;
 

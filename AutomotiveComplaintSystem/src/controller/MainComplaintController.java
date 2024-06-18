@@ -208,19 +208,66 @@ public class MainComplaintController {
 			register(selectComplaint);
 			break;
 		case "자동차이전등록신청":
-			// transfer(selectComplaint);
+			transfer(selectComplaint);
 			break;
 		case "자동차말소등록신청":
-			// cancellation(selectComplaint);
+			cancellation(selectComplaint);
 			break;
 
 		}
 	}
 
-	private void register(Complaint selectComplaint) {
-		// payForIssuance(car, loginUser, type)
-	}
 
+
+	private void register(Complaint selectComplaint) {
+		Car car = carList.findByIdentificationNumber(selectComplaint.getCarID());
+		
+		if(payForIssuance(car, loginUser, "자동차 신규 등록")) {
+			TUI.printMessage("결제에 실패했습니다");
+			return;
+		}
+		
+		selectComplaint.setComplaintStatus(ComplaintStatus.COMPLETED); // 민원 처리완료
+		car.setCarStatus(CarStatus.REGISTER); // 등록 상태로 변경
+		carOwnerList.add(new CarOwner(car, selectComplaint.getRepresentativeOwner(), selectComplaint.getCoOwner()));
+		TUI.printMessage("신규 등록 처리 완료");		
+	}
+	
+	private void transfer(Complaint selectComplaint) {
+		Car car = carList.findByIdentificationNumber(selectComplaint.getCarID());
+		
+		if(payForIssuance(car, loginUser, "자동차 이전 등록")) {
+			TUI.printMessage("결제에 실패했습니다");
+			return;
+		}
+		
+		for(CarOwner carOwner : carOwnerList) {
+			if(carOwner.getCar() == car)
+			{
+				carOwner.setRepresentativeOwner((Customer)loginUser);
+				carOwner.setCoOwner(null);
+			}
+		}
+		
+		selectComplaint.setComplaintStatus(ComplaintStatus.COMPLETED); // 민원 처리완료
+		carOwnerList.add(new CarOwner(car, selectComplaint.getRepresentativeOwner(), selectComplaint.getCoOwner()));
+		TUI.printMessage("이전 신청 처리 완료");		
+	}
+	
+
+	private void cancellation(Complaint selectComplaint) {
+		Car car = carList.findByIdentificationNumber(selectComplaint.getCarID());
+		
+		if(payForIssuance(car, loginUser, "자동차 말소 등록")) {
+			TUI.printMessage("결제에 실패했습니다");
+			return;
+		}
+				
+		selectComplaint.setComplaintStatus(ComplaintStatus.COMPLETED); // 민원 처리완료
+		car.setCarStatus(CarStatus.CANCELLATION); // 등록 상태로 변경
+		TUI.printMessage("말소 등록 처리 완료");
+	}
+	
 	private boolean payForIssuance(Car car, User loginUser, String type) {
 		TUI.printReceiveMethod(type);
 		TUI.printConfirmation();

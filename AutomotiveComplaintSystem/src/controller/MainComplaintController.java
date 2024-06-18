@@ -139,7 +139,7 @@ public class MainComplaintController {
 					break;
 				// 사용자 신청 승인
 				case "3":
-
+					userApprove();
 					break;
 				// 납부
 				case "4":
@@ -159,12 +159,43 @@ public class MainComplaintController {
 		}
 	}
 
+	// 사용자의 승인 요청
+	private void userApprove() {
+		ArrayList<Complaint> userComplaintList = new ArrayList<Complaint>();
+		for (Complaint complaint : complaintList) {
+			if (complaint.getComplaintStatus().equals(ComplaintStatus.PENDING_APPROVAL)
+					&& complaint.getCoOwner() == loginUser) {
+				userComplaintList.add(complaint);
+			}
+		}
+
+		// print 사용자 승인 요청 목록
+		for (Complaint compalint : userComplaintList) {
+			TUI.printMessage(compalint.getReceptionNumber() + " " + compalint.toString());
+		}
+
+		// 민원 선택
+		Complaint selectComplaint = selectComplaint(userComplaintList);
+		TUI.printMessage("승인하시겠습니까?");
+		TUI.printMessage("[Y/N]");
+
+		String selected = view.DataInput.sc.nextLine();
+
+		if (selected.equals("Y")) {
+			selectComplaint.setComplaintStatus(ComplaintStatus.PENDING_REVIEW);
+			TUI.printMessage("승인 완료");
+		} else {
+			TUI.printMessage("승인하지 않았습니다.");
+		}
+
+	}
+
 	private void pay() {
 		if (complaintList == null) {
 			TUI.printMessage("민원 목록이 존재하지 않습니다.");
 		} else {
 			for (Complaint complaint : complaintList) {
-				if(complaint.getRepresentativeOwner() == loginUser)
+				if (complaint.getRepresentativeOwner() == loginUser)
 					TUI.printMessage(complaint.getReceptionNumber() + " " + complaint.toString());
 			}
 		}
@@ -285,6 +316,20 @@ public class MainComplaintController {
 		Complaint complaint = null;
 
 		for (Complaint c : complaintList) {
+			if (c.getReceptionNumber().equals(select)) {
+				complaint = c;
+			}
+		}
+
+		return complaint;
+	}
+
+	private Complaint selectComplaint(ArrayList<Complaint> list) {
+		TUI.printMessage("승인하려는 민원 번호 입력");
+		String select = view.DataInput.sc.nextLine();
+		Complaint complaint = null;
+
+		for (Complaint c : list) {
 			if (c.getReceptionNumber().equals(select)) {
 				complaint = c;
 			}

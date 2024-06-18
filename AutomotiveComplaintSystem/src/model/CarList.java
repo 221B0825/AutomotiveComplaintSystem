@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CarList {
-	
+
 	private List<Car> carList;
-	
+
 	public CarList() {
 		carList = new ArrayList<>();
 		File file = new File("data/car/car.txt");
@@ -17,8 +17,6 @@ public class CarList {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNext()) {
 				// add user : read line
-
-				
 				String[] split = sc.nextLine().split("\\|");
 				String identificationNumber = split[0];
 				String name = split[1];
@@ -37,12 +35,14 @@ public class CarList {
 	}
 
 	public Car findByIdentificationNumber(String identificationNumber) {
-		for(Car car : carList) {
-			if(car.getIdentificationNumber().equals(identificationNumber))
+		for (Car car : carList) {
+			if (car.getIdentificationNumber().equals(identificationNumber)) {
 				return car;
+			}
+
 		}
 		return null;
-		
+
 	}
 
 }

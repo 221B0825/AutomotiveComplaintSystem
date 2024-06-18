@@ -62,7 +62,7 @@ public class Car {
 	@Override
 	public String toString() {
 		return "============= 차량 정보 =============\n" + "차 명 : " + this.getName() + "  연식 : " + this.getModelYear()
-				+ "\n" + "차대번호 : " + this.getIdentificationNumber() + "색상 : " + this.getColor() + "\n" + "등록 상태 : "
+				+ "\n" + "차대번호 : " + this.getIdentificationNumber() + " 색상 : " + this.getColor() + "\n" + "등록 상태 : "
 				+ this.getCarStatus();
 	}
 

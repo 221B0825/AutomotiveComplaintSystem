@@ -120,9 +120,9 @@ public class TUI {
 		System.out.print("선택: ");
 	}
 
-	public void printReceiveMethod() {
+	public void printReceiveMethod(String type) {
 		System.out.println("수령 방법:");
-		System.out.println("수령물: 자동차 등록증");
+		System.out.println("수령물: " + type);
 		System.out.println("수령인: 본인");
 		System.out.println("수령방법: 온라인 발급(인쇄)");
 	}

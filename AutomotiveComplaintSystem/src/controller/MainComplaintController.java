@@ -153,11 +153,12 @@ public class MainComplaintController {
 			break;
 		// 자동차 이전등록신청
 		case "4":
-			
+			registerComplaintController.transfer((Customer)loginUser);
+
 			break;
 		// 저당권설정등록신청
 		case "5":
-
+			// 시간 남으면 진행
 			break;
 		// 자동차 말소등록신청
 		case "6":
@@ -165,7 +166,7 @@ public class MainComplaintController {
 			break;
 		// 정기/종합검사 유효기간 연장(유예)신청
 		case "7":
-
+			// 시간 남으면 진행
 			break;
 
 		default:

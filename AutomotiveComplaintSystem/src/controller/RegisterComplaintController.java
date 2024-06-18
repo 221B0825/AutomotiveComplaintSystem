@@ -173,17 +173,30 @@ public class RegisterComplaintController {
 			System.out.println("존재하지 않는 고객입니다.");
 			return;
 		}
+		// 양도 증명 내용 입력
+		TUI.printMessage("판매 가격");
+		long salePrice = Long.parseLong(DataInput.sc.nextLine());
+		TUI.printMessage("판매일");
+		String saleDate = DataInput.sc.nextLine();
+		TUI.printMessage("자동차 인도 날짜");
+		String carDeliveryDate =  DataInput.sc.nextLine();
+		
 		TUI.printMessage("양도증명 신청하시겠습니까? > ");
 		
 		if (confirmChoice() == false) // 
 			return;
 		
 		// 양도증명 등록
-		assignmentCetificationList.add(new AssignmentCetification(selectedCar, representativeOwner, (Customer)transferee));
+		assignmentCetificationList.add(new AssignmentCetification(selectedCar, representativeOwner, (Customer)transferee, salePrice,saleDate ,carDeliveryDate));
 		
 		
 	}
 
+	public void transfer(Customer loginUser) {
+		
+	}
+	
+	
 	private Car selectCar() {
 		TUI.printSelectCarUpdateMessage();
 		String identificationNumber = view.DataInput.sc.nextLine();
@@ -241,5 +254,6 @@ public class RegisterComplaintController {
 			return true;
 		return false;
 	}
+
 
 }

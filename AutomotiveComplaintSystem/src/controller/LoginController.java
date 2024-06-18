@@ -44,12 +44,18 @@ public class LoginController {
 		TUI.printMessage("[아이디(이메일)] ");
 		String inputEmail = view.DataInput.sc.nextLine();
 
+		if(!inputEmail.matches("^[_0-9a-zA-Z-]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z]+)*$")) {
+			return BasicMessage.JoinFail.getMessage()+ " : 이메일 형식이 아닙니다. ";
+		}
+		
 		for (User user : userList.getUserList()) {
 			if (user.getEmail().equals(inputEmail)) {
-				return BasicMessage.JoinFail.getMessage() + " : 이미 회원가입된 이메일";
+				return BasicMessage.JoinFail.getMessage() + " : 이미 회원가입된 이메일입니다.";
 
 			}
 		}
+		
+	
 		long id = userList.getUserList().get(userList.getUserList().size() - 1).getId() + 1;
 
 		TUI.printMessage("[비밀번호]");

@@ -63,6 +63,7 @@ public class MainComplaintController {
 				CarOwner carOwner = new CarOwner(car, ROwner, COwner);
 				carOwnerList.add(carOwner);
 			}
+			carList.findByIdentificationNumber("EEEEEEE").setCarStatus(CarStatus.CANCELLATION);
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
@@ -151,7 +152,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 이전등록신청
 		case "4":
-
+			
 			break;
 		// 저당권설정등록신청
 		case "5":
@@ -188,11 +189,11 @@ public class MainComplaintController {
 			break;
 		// 자동차 말소사실증명서 발급신청
 		case "3":
-
+			issuanceComplainController.carCertificateOfExpungement(loginUser);
 			break;
 		// 이륜차 사용폐지증명서 발급신청
 		case "4":
-
+			
 			break;
 		// 이륜차 사용신고필증 재발급신청
 		case "5":

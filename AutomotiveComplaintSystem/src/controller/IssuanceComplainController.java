@@ -6,7 +6,7 @@ import java.util.List;
 import model.Car;
 import model.CarList;
 import model.CarOwner;
-import model.Customer;
+import model.CarStatus;
 import model.User;
 import model.UserList;
 import view.TUI;
@@ -26,11 +26,12 @@ public class IssuanceComplainController {
 		this.userList = userList;
 	}
 
-	private Car findOwnCarAndSelect(User loginUser) {
+	private Car findOwnCarAndSelect(User loginUser, CarStatus status) {
 		// 자신의 차 가져오기
 		List<Car> userCarList = new ArrayList<Car>();
 		for (CarOwner carOwner : carOwnerList) {
-			if (carOwner.getRepresentativeOwner().getEmail().equals(loginUser.getEmail()))
+			if (carOwner.getRepresentativeOwner().getEmail().equals(loginUser.getEmail())
+					&& carOwner.getCar().getCarStatus().equals(status))
 				userCarList.add(carOwner.getCar());
 		}
 
@@ -65,11 +66,11 @@ public class IssuanceComplainController {
 		if (confirmation.equalsIgnoreCase("Y")) {
 			TUI.printMessage("민원 신청을 위한 납부로 넘어갑니다.");
 			// 납부 로직 시작
-			TUI.printMessage("=====납부 절차======");
+			TUI.printMessage("==========납부 절차===========");
 			TUI.printOwnerInfo(loginUser);
 			TUI.printCarInfo(car);
-			TUI.printMessage("=================");
-			TUI.printMessage("납부 금액("+type+"): 1000");
+			TUI.printMessage("===========================");
+			TUI.printMessage("납부 금액(" + type + "): 1000");
 			TUI.printPaymentOptions();
 			int paymentOption = view.DataInput.sc.nextInt();
 			view.DataInput.sc.nextLine(); // 개행 문자 처리
@@ -98,10 +99,11 @@ public class IssuanceComplainController {
 		}
 		return false;
 	}
+
 	public void carRegistrationReIssuance(User loginUser) {
 
 		// 유저에 맞는 차량 목록에서 차량 선택
-		Car car = findOwnCarAndSelect(loginUser);
+		Car car = findOwnCarAndSelect(loginUser, CarStatus.REGISTER);
 		if (car == null) {
 			return;
 		}
@@ -131,7 +133,7 @@ public class IssuanceComplainController {
 
 		if (payForIssuance(car, loginUser, type)) {
 			TUI.printMessage("결제가 완료되었습니다. 자동차 등록증 재발급 신청이 완료되었습니다.");
-			TUI.printCarRegistrationCertificate(loginUser, car);
+			TUI.printCarRegistrationCertificate(car, loginUser, type);
 		} else {
 			TUI.printMessage("자동차 등록증 재발급 신청이 취소되었습니다.");
 			return;
@@ -139,14 +141,55 @@ public class IssuanceComplainController {
 
 	}
 
-
 	// 자동차 등록원부
 	public void carRegistration(User loginUser) {
-		Car car = findOwnCarAndSelect(loginUser);
+		TUI.printSelectCarStatus();
+		String selected = view.DataInput.sc.nextLine();
+		Car car = null;
+		switch (selected) {
+		case "1":
+			car = findOwnCarAndSelect(loginUser, CarStatus.REGISTER);
+			if (car == null) {
+				TUI.printMessage("운행 차량 내역이 존재하지 않습니다.");
+				return;
+			}
+			break;
+		case "2":
+			car = findOwnCarAndSelect(loginUser, CarStatus.CANCELLATION);
+			if (car == null) {
+				TUI.printMessage("말소 차량 내역이 존재하지 않습니다.");
+				return;
+			}
+			break;
+
+		default:
+			TUI.printWrongInputMessage();
+			return;
+		}
+		
+		String type = "자동차 등록원부";
+		TUI.printCarRegistrationCertificate(car, loginUser, type);
+	}
+
+	//자동차 말소사실 증명서
+	public void carCertificateOfExpungement(User loginUser) {
+		// 유저에 맞는 차량 목록에서 차량 선택
+		Car car = findOwnCarAndSelect(loginUser, CarStatus.CANCELLATION);
 		if (car == null) {
 			return;
 		}
+		
+		String type = "말소사실 증명서";
 
+		if (payForIssuance(car, loginUser, type)) {
+			TUI.printMessage("결제가 완료되었습니다. 말소사실 증명서 신청이 완료되었습니다.");
+			TUI.printCarRegistrationCertificate(car, loginUser, type);
+			TUI.printMessage("위 차량은 말소되었음을 증명합니다.");
+		} else {
+			TUI.printMessage("말소사실 증명서 신청이 취소되었습니다.");
+			return;
+		}
+		
 	}
 
 }

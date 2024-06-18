@@ -1,1 +1,2 @@
-DDDDDDD|user3|NULL
+DDDDDDD|user3@gmail.com|NULL
+EEEEEEE|user3@gmail.com|NULL

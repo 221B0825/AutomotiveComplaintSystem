@@ -70,5 +70,11 @@ public class AssignmentCetification {
 	public void setCarDeliveryDate(String carDeliveryDate) {
 		this.carDeliveryDate = carDeliveryDate;
 	}
-
+	public void printAssignmentCertificationInfo() {
+		System.out.println("양도 증명 내역");
+		System.out.println("매매금액 : " + this.salePrice);
+		System.out.println("매매일 : " + this.saleDate);
+		System.out.println("이전날짜 : " + this.carDeliveryDate);
+		
+	}
 }

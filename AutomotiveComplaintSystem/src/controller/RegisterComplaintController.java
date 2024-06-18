@@ -141,7 +141,7 @@ public class RegisterComplaintController {
 	}
 
 	public void assignment(Customer loginUser) {
-		TUI.printMessage("양도증명 신청을 시작합니다.");
+		TUI.printMessage("양도증명 등록을 시작합니다.");
 
 		printCarList(loginUser);
 		Car selectedCar = selectCar();
@@ -193,7 +193,58 @@ public class RegisterComplaintController {
 	}
 
 	public void transfer(Customer loginUser) {
+		TUI.printMessage("이전 신청을 시작합니다.");
 		
+		TUI.printMessage("이전 신청할 차량번호를 선택하십시오  > ");
+		
+		Car selectedCar = selectCar();
+		
+		AssignmentCetification selectedAssignmentCetification = null;
+		// 양도증명 내역 불러오기
+		for(AssignmentCetification assignmentCetification : assignmentCetificationList) {
+			if(assignmentCetification.getCar() == selectedCar) {
+				selectedAssignmentCetification = assignmentCetification;
+			}
+		}
+		// 양수인 확인 및 출력
+		Customer transferee = selectedAssignmentCetification.getTransferee();
+		if(transferee != loginUser) {
+			System.out.println("양수인이 아닙니다.");
+			return;
+		}
+		
+		TUI.printMessage("양수인 정보");
+		TUI.printMessage(transferee.toString());
+
+		// 양도인 정보 출력
+		TUI.printMessage("양도인 정보");
+		TUI.printMessage(selectedAssignmentCetification.getTransferor().toString());
+		
+		
+		// 양도증명 내역 출력
+		selectedAssignmentCetification.printAssignmentCertificationInfo();
+		
+
+		
+		// 파일 입력 확인
+		confirmTransferDocument(loginUser);
+
+		
+		
+
+		// 공동 소유자 조회
+		Customer coOwner = null;
+		for (CarOwner carOwner : carOwnerList) { // 차의 대표소유자와 공동소유자 조회
+			if (carOwner.getCar() == selectedCar) {
+				coOwner = carOwner.getCoOwner();
+			}
+		}
+		
+		
+		// 이전 민원 등록		
+		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, coOwner,
+				ComplaintStatus.PENDING_APPROVAL));
 	}
 	
 	
@@ -244,11 +295,26 @@ public class RegisterComplaintController {
 				TUI.printMissingDocument(fileName);
 				return false;
 			}
+			else
+				TUI.printMessage("문서확인 : " + fileName);
 		}
 
 		return true;
 	}
 
+	private boolean confirmTransferDocument(User loginUser) {
+		for (String fileName : List.of("/의무보험 가입증명서")) {
+			if (!isExistsDocument(new File("data/file/user" + loginUser.getId() + fileName))) {
+				TUI.printMissingDocument(fileName);
+				return false;
+			}
+			else
+				TUI.printMessage("문서확인 : " + fileName);
+		}
+
+		return true;
+	}
+	
 	private boolean isExistsDocument(File file) {
 		if (file.exists())
 			return true;

@@ -1,6 +1,7 @@
 package model;
 
 public enum ComplaintStatus {
+	PENDING_APPROVAL("신청승인 대기중"),
     PENDING_REVIEW("심사대기"),    
     AWAITING_PAYMENT("비용납부대기"),  
     PAYMENT_COMPLETED("비용납부완료"), 

@@ -8,11 +8,19 @@ public class AssignmentCetification {
 	// 양수인
 	private Customer transferee;
 
-	public AssignmentCetification(Car car, Customer transferor, Customer transferee) {
+	private long salePrice;
+	private String saleDate;
+	private String carDeliveryDate;
+
+	public AssignmentCetification(Car car, Customer transferor, Customer transferee, long salePrice, String saleDate,
+			String carDeliveryDate) {
 		super();
 		this.car = car;
 		this.transferor = transferor;
 		this.transferee = transferee;
+		this.salePrice = salePrice;
+		this.saleDate = saleDate;
+		this.carDeliveryDate = carDeliveryDate;
 	}
 
 	public Car getCar() {
@@ -37,6 +45,30 @@ public class AssignmentCetification {
 
 	public void setTransferee(Customer transferee) {
 		this.transferee = transferee;
+	}
+
+	public long getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(long salePrice) {
+		this.salePrice = salePrice;
+	}
+
+	public String getSaleDate() {
+		return saleDate;
+	}
+
+	public void setSaleDate(String saleDate) {
+		this.saleDate = saleDate;
+	}
+
+	public String getCarDeliveryDate() {
+		return carDeliveryDate;
+	}
+
+	public void setCarDeliveryDate(String carDeliveryDate) {
+		this.carDeliveryDate = carDeliveryDate;
 	}
 
 }

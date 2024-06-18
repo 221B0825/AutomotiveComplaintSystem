@@ -162,7 +162,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 말소등록신청
 		case "6":
-
+			registerComplaintController.Cancellation((Customer)loginUser);
 			break;
 		// 정기/종합검사 유효기간 연장(유예)신청
 		case "7":

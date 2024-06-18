@@ -33,7 +33,7 @@ public class AdminController {
 			TUI.printMessage("민원 목록이 존재하지 않습니다.");
 		} else {
 			for (Complaint complaint : complaintList) {
-				TUI.printMessage(complaint.getReceptionNumber() + " " + complaint.toString());
+				TUI.printMessage(complaint.toString());
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public class AdminController {
 	}
 
 	private Complaint selectComplaint() {
-		TUI.printMessage("승인하려는 민원 번호 입력");
+		TUI.printMessage("[승인하려는 민원 번호 입력]");
 		String select = view.DataInput.sc.nextLine();
 		Complaint complaint = null;
 

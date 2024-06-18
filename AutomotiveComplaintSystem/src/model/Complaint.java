@@ -7,17 +7,16 @@ public class Complaint {
 	private String serviceName;
 	private LocalDateTime date;
 	private Admin admin;
-	
+
 	private String carID;
 	// 대표 소유자
 	private Customer representativeOwner;
 	// 공동 소유자
 	private Customer coOwner;
 	private ComplaintStatus complaintStatus;
-	
-	public Complaint() {}
-	
 
+	public Complaint() {
+	}
 
 	public Complaint(Long receptionNumber, String serviceName, LocalDateTime date, Admin admin,
 			Customer representativeOwner, Customer coOwner, ComplaintStatus complaintStatus, String carID) {
@@ -31,8 +30,6 @@ public class Complaint {
 		this.complaintStatus = complaintStatus;
 		this.carID = carID;
 	}
-
-
 
 	public Long getReceptionNumber() {
 		return receptionNumber;
@@ -66,31 +63,21 @@ public class Complaint {
 		this.admin = admin;
 	}
 
-
-
 	public Customer getRepresentativeOwner() {
 		return representativeOwner;
 	}
-
-
 
 	public void setRepresentativeOwner(Customer representativeOwner) {
 		this.representativeOwner = representativeOwner;
 	}
 
-
-
 	public Customer getCoOwner() {
 		return coOwner;
 	}
 
-
-
 	public void setCoOwner(Customer coOwner) {
 		this.coOwner = coOwner;
 	}
-
-
 
 	public ComplaintStatus getComplaintStatus() {
 		return complaintStatus;
@@ -100,27 +87,19 @@ public class Complaint {
 		this.complaintStatus = complaintStatus;
 	}
 
-
-
 	public String getCarID() {
 		return carID;
 	}
-
-
 
 	public void setCarID(String carID) {
 		this.carID = carID;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Complaint [receptionNumber=" + receptionNumber + ", serviceName=" + serviceName + ", date=" + date
-				+ ", admin=" + admin + ", carID=" + carID + ", representativeOwner=" + representativeOwner
-				+ ", coOwner=" + coOwner + ", complaintStatus=" + complaintStatus + "]";
+		return ":: receptionNumber=" + receptionNumber + " ::\n serviceName=" + serviceName + "\n date=" + date
+				+ "\n admin=" + admin.getName() + "\n carID=" + carID + "\n representativeOwner="
+				+ representativeOwner.getName() + "\n complaintStatus=" + complaintStatus + "\n";
 	}
 
-
-	
 }

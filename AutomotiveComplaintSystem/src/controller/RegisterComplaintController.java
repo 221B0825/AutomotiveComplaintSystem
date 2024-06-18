@@ -69,11 +69,19 @@ public class RegisterComplaintController {
 			return;
 		}
 
-		TUI.printMessage("공동소유자 등록");
-		TUI.printMessage("공동소유자로 등록할 고객의 주민번호를 입력해주세요 : ");
-		String socialNumber = DataInput.sc.nextLine();
+		User coOwner = null;
 
-		User coOwner = userList.findBySocialNumber(socialNumber);
+		TUI.printMessage("공동소유자를 등록하시겠습니까?");
+		if (confirmChoice() == true) {// 자신의 정보와 일치하지 않음
+			TUI.printMessage("공동소유자 등록");
+
+			TUI.printMessage("공동소유자로 등록할 고객의 주민번호를 입력해주세요 : ");
+			String socialNumber = DataInput.sc.nextLine();
+
+			coOwner = userList.findBySocialNumber(socialNumber);
+
+		}
+
 		complaintList.add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(),
 				(Admin) userList.findByEmail("admin"), (Customer) loginUser, (Customer) coOwner,
 				ComplaintStatus.PENDING_REVIEW, car.getIdentificationNumber()));
@@ -153,7 +161,8 @@ public class RegisterComplaintController {
 
 		Customer representativeOwner = null;
 		Customer coOwner = null;
-
+		TUI.printMessage("차량 정보");
+		System.out.println(selectedCar.toString());
 		for (CarOwner carOwner : carOwnerList) { // 차의 대표소유자와 공동소유자 조회
 			if (carOwner.getCar() == selectedCar) {
 				representativeOwner = carOwner.getRepresentativeOwner();

@@ -102,7 +102,7 @@ public class TUI {
 	public void printSelectCarStatus() {
 		System.out.println("차량 상태 선택");
 		System.out.println("1. 운행 차량");
-		System.out.println("1. 말소 차량");
+		System.out.println("2. 말소 차량");
 		System.out.print("선택: ");
 	}
 

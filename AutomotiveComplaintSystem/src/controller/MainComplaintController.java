@@ -33,7 +33,7 @@ public class MainComplaintController {
 	private LoginController loginController;
 	private IssuanceComplainController issuanceComplainController;
 	private RegisterComplaintController registerComplaintController;
-	
+
 	private AdminController adminController;
 
 	private User loginUser;
@@ -41,7 +41,7 @@ public class MainComplaintController {
 	public MainComplaintController() {
 		carList = new CarList();
 		userList = new UserList();
-		complaintList = new ArrayList<Complaint>();		
+		complaintList = new ArrayList<Complaint>();
 		carOwnerList = new ArrayList<CarOwner>();
 		assignmentCetificationList = new ArrayList<AssignmentCetification>();
 
@@ -74,7 +74,7 @@ public class MainComplaintController {
 		issuanceComplainController = new IssuanceComplainController(TUI, carList, carOwnerList, userList);
 		registerComplaintController = new RegisterComplaintController(TUI, carList, userList, complaintList,
 				carOwnerList, assignmentCetificationList);
-		
+
 		adminController = new AdminController(TUI, userList, carList, carOwnerList, complaintList);
 	}
 
@@ -104,8 +104,8 @@ public class MainComplaintController {
 	public void run() {
 
 		if (loginUser.getEmail().equals("admin")) {
-			
-			while(true) {
+
+			while (true) {
 				this.TUI.printAdminMenu();
 				String selected = view.DataInput.sc.nextLine();
 				switch (selected) {
@@ -113,7 +113,7 @@ public class MainComplaintController {
 					adminController.showComplaintList();
 					break;
 				case "2":
-					
+
 					break;
 
 				default:
@@ -142,7 +142,7 @@ public class MainComplaintController {
 					break;
 				// 납부
 				case "4":
-
+					pay();
 					break;
 				// 로그아웃
 				case "5":
@@ -156,6 +156,94 @@ public class MainComplaintController {
 
 			}
 		}
+	}
+
+	private void pay() {
+		if (complaintList == null) {
+			TUI.printMessage("민원 목록이 존재하지 않습니다.");
+		} else {
+			for (Complaint complaint : complaintList) {
+				if(complaint.getRepresentativeOwner() == loginUser)
+					TUI.printMessage(complaint.getReceptionNumber() + " " + complaint.toString());
+			}
+		}
+		Complaint selectComplaint = selectComplaint();
+		if (selectComplaint == null)
+			TUI.printMessage("존재하지 않는 민원입니다.");
+
+		switch (selectComplaint.getServiceName()) {
+		case "자동차신규등록신청":
+			register(selectComplaint);
+			break;
+		case "자동차이전등록신청":
+			//transfer(selectComplaint);
+			break;
+		case "자동차말소등록신청":
+			//cancellation(selectComplaint);
+			break;
+
+		}
+	}
+
+
+	private void register(Complaint selectComplaint) {
+		//payForIssuance(car, loginUser, type)
+	}
+
+	private boolean payForIssuance(Car car, User loginUser, String type) {
+		TUI.printReceiveMethod(type);
+		TUI.printConfirmation();
+
+		String confirmation = view.DataInput.sc.nextLine();
+		if (confirmation.equalsIgnoreCase("Y")) {
+			TUI.printMessage("민원 신청을 위한 납부로 넘어갑니다.");
+			// 납부 로직 시작
+			TUI.printMessage("==========납부 절차===========");
+			TUI.printOwnerInfo(loginUser);
+			TUI.printCarInfo(car);
+			TUI.printMessage("===========================");
+			TUI.printMessage("납부 금액(" + type + "): 1000");
+			TUI.printPaymentOptions();
+			int paymentOption = view.DataInput.sc.nextInt();
+			view.DataInput.sc.nextLine(); // 개행 문자 처리
+
+			String paymentMethod = "";
+			switch (paymentOption) {
+			case 1:
+				paymentMethod = "카드";
+				break;
+			case 2:
+				paymentMethod = "가상계좌";
+				break;
+			default:
+				TUI.printMessage("잘못된 결제 방법입니다.");
+				return false;
+			}
+
+			TUI.printPaymentConfirmation();
+
+			String paymentConfirmation = view.DataInput.sc.nextLine();
+			if (paymentConfirmation.equals("Y")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	private Complaint selectComplaint() {
+		TUI.printMessage("승인하려는 민원 번호 입력");
+		String select = view.DataInput.sc.nextLine();
+		Complaint complaint = null;
+
+		for (Complaint c : complaintList) {
+			if (c.getReceptionNumber().equals(select)) {
+				complaint = c;
+			}
+		}
+
+		return complaint;
 	}
 
 	// 등록 민원 신청 처리
@@ -187,7 +275,7 @@ public class MainComplaintController {
 			break;
 		// 자동차 말소등록신청
 		case "6":
-			registerComplaintController.Cancellation((Customer)loginUser);
+			registerComplaintController.Cancellation((Customer) loginUser);
 			break;
 		// 정기/종합검사 유효기간 연장(유예)신청
 		case "7":

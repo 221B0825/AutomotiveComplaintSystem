@@ -264,7 +264,7 @@ public class RegisterComplaintController {
 		confirmCancellationDocument(loginUser);
 
 		// 말소 등록 민원
-		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
+		complaintList.add(new Complaint(complaintNumber++, "자동차말소등록신청", LocalDateTime.now(),
 				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null, ComplaintStatus.PENDING_REVIEW));
 	}
 

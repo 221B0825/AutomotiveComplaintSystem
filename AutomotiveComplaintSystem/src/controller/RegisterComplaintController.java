@@ -76,7 +76,9 @@ public class RegisterComplaintController {
 		User coOwner = userList.findBySocialNumber(socialNumber);
 		complaintList.add(new Complaint(complaintNumber++, "자동차신규등록신청", LocalDateTime.now(),
 				(Admin) userList.findByEmail("admin"), (Customer) loginUser, (Customer) coOwner,
-				ComplaintStatus.PENDING_REVIEW));
+				ComplaintStatus.PENDING_REVIEW, car.getIdentificationNumber()));
+
+		TUI.printMessage("자동차신규등록 신청 완료");
 	}
 
 	public void update(Customer loginUser) {
@@ -234,8 +236,8 @@ public class RegisterComplaintController {
 
 		// 이전 민원 등록
 		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
-				(Admin) userList.findByEmail("admin"), (Customer) loginUser, coOwner,
-				ComplaintStatus.PENDING_APPROVAL));
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, coOwner, ComplaintStatus.PENDING_APPROVAL,
+				selectedCar.getIdentificationNumber()));
 	}
 
 	public void Cancellation(Customer loginUser) {
@@ -265,7 +267,9 @@ public class RegisterComplaintController {
 
 		// 말소 등록 민원
 		complaintList.add(new Complaint(complaintNumber++, "자동차이전등록신청", LocalDateTime.now(),
-				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null, ComplaintStatus.PENDING_REVIEW));
+				(Admin) userList.findByEmail("admin"), (Customer) loginUser, null, ComplaintStatus.PENDING_REVIEW,
+				selectedCar.getIdentificationNumber()));
+
 	}
 
 	private Car selectCar() {

@@ -192,6 +192,11 @@ public class RegisterComplaintController {
 		
 	}
 
+	public void transfer(Customer loginUser) {
+		
+	}
+	
+	
 	private Car selectCar() {
 		TUI.printSelectCarUpdateMessage();
 		String identificationNumber = view.DataInput.sc.nextLine();
@@ -249,5 +254,6 @@ public class RegisterComplaintController {
 			return true;
 		return false;
 	}
+
 
 }

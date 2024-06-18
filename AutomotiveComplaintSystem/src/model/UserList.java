@@ -53,4 +53,12 @@ public class UserList {
 		return null;
 	}
 
+	public User findBySocialNumber(String socialNumber) {
+		for(User user : userList) {
+			if(user.getSocialNumber().equals(socialNumber))
+				return user;
+		}
+		return null;
+	}
+
 }

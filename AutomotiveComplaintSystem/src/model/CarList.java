@@ -38,7 +38,7 @@ public class CarList {
 
 	public Car findByIdentificationNumber(String identificationNumber) {
 		for(Car car : carList) {
-			if(car.getIdentificationNumber().equals(identificationNumber));
+			if(car.getIdentificationNumber().equals(identificationNumber))
 				return car;
 		}
 		return null;
